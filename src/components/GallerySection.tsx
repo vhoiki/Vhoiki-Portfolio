@@ -78,7 +78,7 @@ export default function GallerySection({ id, title, images, scrollingImages }: G
       {/* Horizontal Scroll Gallery */}
       <div className="relative group/gallery pb-8">
         {/* Violet glow behind scrolling images */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[150%] bg-neon-violet/20 blur-[100px] rounded-[100%] pointer-events-none z-0"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[150%] bg-neon-violet/15 blur-[120px] rounded-[100%] pointer-events-none z-0"></div>
 
         <div className="flex w-max animate-marquee hover:[animation-play-state:paused] relative z-10">
           {[...Array(2)].map((_, setIdx) => (
@@ -86,18 +86,27 @@ export default function GallerySection({ id, title, images, scrollingImages }: G
               {(scrollingImages || images.slice(0, 6)).map((src, idx) => (
                 <div
                   key={`${setIdx}-${idx}`}
-                  className="relative flex-none w-[48vw] md:w-[24vw] lg:w-[18vw] aspect-[4/5] group/item cursor-pointer overflow-hidden rounded-xl bg-white/5"
+                  className="relative flex-none w-[48vw] md:w-[24vw] lg:w-[18vw] aspect-[4/5] group/item cursor-pointer rounded-[2rem] bg-white/5 backdrop-blur-2xl border border-white/20 p-2 shadow-xl hover:shadow-2xl hover:shadow-neon-violet/40 hover:bg-white/10 hover:border-white/30 transition-all duration-500"
                   onClick={() => setSelectedImage(src)}
                 >
-                  <img 
-                    src={src} 
-                    alt={`${title} ${idx + 1}`} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover/item:scale-105"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-neon-violet/0 group-hover/item:bg-neon-violet/20 transition-colors duration-500 mix-blend-overlay"></div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/item:opacity-100 transition-opacity duration-500">
-                    <Expand size={32} className="text-white drop-shadow-lg" />
+                  {/* Liquid glass edge reflection */}
+                  <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-tr from-neon-violet/20 via-transparent to-white/20 opacity-50 pointer-events-none"></div>
+                  
+                  {/* Image Container */}
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-inner">
+                    <img 
+                      src={src} 
+                      alt={`${title} ${idx + 1}`} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover/item:scale-105"
+                      referrerPolicy="no-referrer"
+                    />
+                    {/* Glossy overlay on image */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-transparent opacity-30 pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-neon-violet/0 group-hover/item:bg-neon-violet/30 transition-colors duration-500 mix-blend-overlay pointer-events-none"></div>
+                    
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/item:opacity-100 transition-opacity duration-500 pointer-events-none">
+                      <Expand size={32} className="text-white drop-shadow-lg" />
+                    </div>
                   </div>
                 </div>
               ))}
